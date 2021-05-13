@@ -1,0 +1,45 @@
+{
+	"version": "2.0.0",
+	"tasks": [
+		{
+			"type": "cppbuild",
+			"label": "C/C++: g++.exe Build active file",
+			"command": "C:\\mingw-w64\\x86_64-8.1.0-win32-seh-rt_v6-rev0\\mingw64\\bin\\g++.exe",
+			"args": [
+				"-g",
+				"-std=c++17",
+				"-I",
+				"${workspaceFolder}\\Headers",
+				"-I",
+				"${VK_SDK_PATH}\\Include",
+				"-I",
+				"${workspaceFolder}\\Third_Party_Headers\\glm",
+				"-I",
+				"${workspaceFolder}\\Third_Party_Headers\\glfw-3.3.2.bin.WIN64\\include",
+				"-L",
+				"${VK_SDK_PATH}\\Lib",
+				"-L",
+				"${workspaceFolder}\\Third_Party_Headers\\glfw-3.3.2.bin.WIN64\\lib-mingw-w64",
+				"-L",
+				"${workspaceFolder}\\Third_Party_Headers\\glm\\glm",
+				"${workspaceFolder}\\Src\\*.cpp",
+				"-o",
+				"${workspaceFolder}\\x64\\Release\\vkRenderer.exe",
+				"-lvulkan-1",
+				"-lglfw3",
+				"-lgdi32"
+			],
+			"options": {
+				"cwd": "${workspaceFolder}"
+			},
+			"problemMatcher": [
+				"$gcc"
+			],
+			"group": {
+				"kind": "build",
+				"isDefault": true
+			},
+			"detail": "compiler: C:\\mingw-w64\\x86_64-8.1.0-win32-seh-rt_v6-rev0\\mingw64\\bin\\g++.exe"
+		}
+	]
+}
