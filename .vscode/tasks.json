@@ -9,7 +9,7 @@
 				"-g",
 				"-std=c++17",
 				"-I",
-				"${workspaceFolder}\\headers",
+				"${workspaceFolder}\\header",
 				"-I",
 				"${VK_SDK_PATH}\\Include",
 				"-I",
