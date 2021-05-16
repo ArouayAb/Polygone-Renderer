@@ -38,9 +38,32 @@ private:
 	VkInstance instance;
 
 	VkQueue graphicsQueue;
+
 	VkQueue presentationQueue;
+
 	VkPhysicalDevice physicalDevice;
+
 	VkDevice device;
+
+	VkSurfaceKHR surface;
+
+	VkSwapchainKHR swapChain;
+	std::vector<VkImage> swapChainImages;
+	std::vector<VkImageView> swapChainImageViews;
+	VkFormat swapChainImageFormat;
+	VkExtent2D swapChainExtent;
+
+	VkRenderPass renderPass;
+	VkPipelineLayout pipelineLayout;
+	VkPipeline graphicsPipeline;
+
+	std::vector<VkFramebuffer> swapchainFramebuffers;
+
+	VkCommandPool commandPool;
+	std::vector<VkCommandBuffer> commandBuffers;
+
+	VkSemaphore imageAvailableSemaphore;
+	VkSemaphore renderFinishedSemaphore;
 
 	bool checkValidationLayerSupport();
 	static VkBool32 VKAPI_CALL debugCallback(
@@ -65,8 +88,6 @@ private:
 	
 	bool checkDeviceExensionsSupport(VkPhysicalDevice device);
 
-	VkSurfaceKHR surface;
-
 	void createInstance();
 
 	void createSurface();
@@ -82,13 +103,6 @@ private:
 	VkPresentModeKHR chooseSwapPresentMode(const std::vector<VkPresentModeKHR> availablePresentModes);
 	VkExtent2D chooseSwapExtent(const VkSurfaceCapabilitiesKHR& capabilities);
 
-	VkSwapchainKHR swapChain;
-	std::vector<VkImage> swapChainImages;
-	std::vector<VkImageView> swapChainImageViews;
-
-	VkFormat swapChainImageFormat;
-	VkExtent2D swapChainExtent;
-
 	void createSwapChain();
 
 	void createImageViews();
@@ -97,7 +111,18 @@ private:
 
 	VkShaderModule createShaderModule(const std::vector<char>& code);
 
+	void createRenderPass();
+
 	void createGraphicsPipeline();
+
+	void createFramebuffers();
+
+	void createCommandPool();
+	void createCommandBuffers();
+
+	void createSemaphores();
+
+	void drawFrame();
 
 	void initWindow();
 	void initVulkan();
