@@ -31,6 +31,8 @@ private:
 	const uint32_t HEIGHT = 600;
 	const uint32_t WIDTH = 800;
 
+	const int MAX_FRAMES_IN_FLIGHT = 2;
+
 	std::vector<const char*> deviceExtensions;
 	std::vector<const char*> validationLayers;
 	VkDebugUtilsMessengerEXT debugMessenger;
@@ -62,8 +64,11 @@ private:
 	VkCommandPool commandPool;
 	std::vector<VkCommandBuffer> commandBuffers;
 
-	VkSemaphore imageAvailableSemaphore;
-	VkSemaphore renderFinishedSemaphore;
+	std::vector<VkSemaphore> imageAvailableSemaphores;
+	std::vector<VkSemaphore> renderFinishedSemaphores;
+	std::vector<VkFence> inFlightFences;
+	std::vector<VkFence> imagesInFlight;
+	int currentFrame = 0;
 
 	bool checkValidationLayerSupport();
 	static VkBool32 VKAPI_CALL debugCallback(
@@ -120,7 +125,7 @@ private:
 	void createCommandPool();
 	void createCommandBuffers();
 
-	void createSemaphores();
+	void createSyncObjects();
 
 	void drawFrame();
 
