@@ -14,7 +14,6 @@ int main()
     dvk::Engine engine;
     engine.run();
 
-    std::cout << std::filesystem::current_path().parent_path().parent_path() << std::endl;
     std::cout << cb_test([]() -> std::string {
         return R"(
             #version 420 core
