@@ -21,6 +21,9 @@ namespace dvk {
     public:
         Instance();
         ~Instance();
+
+        [[nodiscard]]
+        VkInstance* getInstance();
     };
 
 } // dvk

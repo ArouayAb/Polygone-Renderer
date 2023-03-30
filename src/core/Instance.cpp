@@ -17,7 +17,6 @@ namespace dvk {
     }
 
     void Instance::init() {
-        Debug debug(&instance);
 
         appInfo.sType = VK_STRUCTURE_TYPE_APPLICATION_INFO;
         appInfo.pApplicationName = "First Triangle!";
@@ -37,10 +36,10 @@ namespace dvk {
         VkDebugUtilsMessengerCreateInfoEXT debugCreateInfo{};
         if (constants::enable_Validation_Layers)
         {
-            createInfo.enabledLayerCount = static_cast<uint32_t>(debug.getValidationLayers().size());
-            createInfo.ppEnabledLayerNames = debug.getValidationLayers().data();
+            createInfo.enabledLayerCount = static_cast<uint32_t>(Debug::getValidationLayers().size());
+            createInfo.ppEnabledLayerNames = Debug::getValidationLayers().data();
 
-            debug.fillDebugUtilsMessengerCreateInfo(debugCreateInfo);
+            Debug::fillDebugUtilsMessengerCreateInfo(debugCreateInfo);
             createInfo.pNext = &debugCreateInfo;
         }
         else
@@ -56,14 +55,16 @@ namespace dvk {
         std::vector<VkExtensionProperties> extensions(extensionCount);
         vkEnumerateInstanceExtensionProperties(nullptr, &extensionCount, extensions.data());
 
-        debug.checkValidationLayerSupport();
+        Debug::checkValidationLayerSupport();
         extensions_utils::checkExtensionsCompatibility(glfwExtensions, extensions);
 
         if (vkCreateInstance(&createInfo, nullptr, &instance) != VK_SUCCESS)
         {
             throw std::runtime_error("Failed to create an instance!");
         }
+    }
 
-        if (constants::enable_Validation_Layers) debug.setupDebugMessenger();
+    VkInstance* Instance::getInstance() {
+        return &instance;
     }
 } // dvk

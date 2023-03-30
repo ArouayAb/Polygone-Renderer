@@ -10,7 +10,7 @@ namespace dvk {
 
     }
 
-    Engine::Engine() {
+    Engine::Engine() : debug(instance.getInstance()){
         init();
     }
 

@@ -17,6 +17,8 @@ namespace dvk {
     private:
         Window window;
         Instance instance;
+        Debug debug;
+
         void init();
     public:
         Engine();

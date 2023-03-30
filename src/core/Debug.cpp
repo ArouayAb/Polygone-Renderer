@@ -2,14 +2,12 @@
 // Created by Arouay on 30/03/2023.
 //
 
-#include <cstring>
-#include <iostream>
-#include <memory>
-#include <utility>
 #include "Debug.hpp"
 #include "Constants.hpp"
 
 namespace dvk {
+
+    std::vector<const char*> Debug::validationLayers = {};
 
     bool Debug::checkValidationLayerSupport()
     {
@@ -76,7 +74,7 @@ namespace dvk {
         createInfo.pUserData = nullptr;
     }
 
-    VkResult Debug::createDebugUtilsMessengerEXT()
+    VkResult Debug::createDebugUtilsMessengerEXT(VkInstance* instance)
     {
         auto func = (PFN_vkCreateDebugUtilsMessengerEXT) vkGetInstanceProcAddr(*instance, "vkCreateDebugUtilsMessengerEXT");
         if (func != nullptr)
@@ -89,7 +87,7 @@ namespace dvk {
         }
     }
 
-    void Debug::destroyDebugUtilsMessengerEXT()
+    void Debug::destroyDebugUtilsMessengerEXT(VkInstance* instance)
     {
         auto func = (PFN_vkDestroyDebugUtilsMessengerEXT) vkGetInstanceProcAddr(*instance, "vkDestroyDebugUtilsMessengerEXT");
         if (func != nullptr)
@@ -102,7 +100,7 @@ namespace dvk {
     {
         fillDebugUtilsMessengerCreateInfo(createInfo);
 
-        if (createDebugUtilsMessengerEXT() != VK_SUCCESS)
+        if (createDebugUtilsMessengerEXT(instance) != VK_SUCCESS)
         {
             throw std::runtime_error("Failed to create debug messenger.");
         };
@@ -114,13 +112,16 @@ namespace dvk {
         {
             throw std::runtime_error("\nValidation layer requested but not available.");
         }
+
+        setupDebugMessenger();
     }
 
     Debug::~Debug() {
-        destroyDebugUtilsMessengerEXT();
+        destroyDebugUtilsMessengerEXT(instance);
     }
 
-    const std::vector<const char *> &Debug::getValidationLayers() const {
+    const std::vector<const char *> &Debug::getValidationLayers() {
         return validationLayers;
     }
+
 } // dvk

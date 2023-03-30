@@ -7,13 +7,15 @@
 
 #include <vector>
 #include <vulkan/vulkan_core.h>
+#include <cstring>
+#include <iostream>
 
 namespace dvk {
 
     class Debug {
     private:
         VkDebugUtilsMessengerCreateInfoEXT createInfo{};
-        std::vector<const char*> validationLayers{};
+        static std::vector<const char*> validationLayers;
         VkDebugUtilsMessengerEXT debugMessenger{};
         VkInstance* instance;
 
@@ -23,17 +25,16 @@ namespace dvk {
                 const VkDebugUtilsMessengerCallbackDataEXT* pCallbackData,
                 void* pUserData
                 );
-        VkResult createDebugUtilsMessengerEXT();
-        void destroyDebugUtilsMessengerEXT();
+        VkResult createDebugUtilsMessengerEXT(VkInstance* instance);
+        void destroyDebugUtilsMessengerEXT(VkInstance* instance);
     public:
         explicit Debug(VkInstance* instance);
         ~Debug();
 
-        bool checkValidationLayerSupport();
+        static bool checkValidationLayerSupport();
         void setupDebugMessenger();
         static void fillDebugUtilsMessengerCreateInfo(VkDebugUtilsMessengerCreateInfoEXT& createInfo);
-
-        [[nodiscard]] const std::vector<const char *> &getValidationLayers() const;
+        static const std::vector<const char *> &getValidationLayers();
     };
 
 } // dvk
