@@ -7,7 +7,7 @@
 
 namespace dvk {
 
-    std::vector<const char*> Debug::validationLayers = {};
+    std::vector<const char*> Debug::validationLayers = { "VK_LAYER_KHRONOS_validation" };
 
     bool Debug::checkValidationLayerSupport()
     {

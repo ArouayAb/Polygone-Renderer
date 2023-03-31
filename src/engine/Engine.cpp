@@ -10,7 +10,10 @@ namespace dvk {
 
     }
 
-    Engine::Engine() : debug(instance.getInstance()){
+    Engine::Engine() :
+        debug(instance.getInstance()),
+        surface(window.getRawWindow().get(), instance.getInstance())
+    {
         init();
     }
 

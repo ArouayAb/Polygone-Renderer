@@ -32,7 +32,8 @@ namespace dvk {
         Window();
         ~Window();
 
-        [[nodiscard]] std::shared_ptr<GLFWwindow> getRawWindow() const;
+        [[nodiscard]]
+        std::shared_ptr<GLFWwindow> getRawWindow() const;
 
         template<typename Lambda>
         void startLoop(Lambda&& cb) {

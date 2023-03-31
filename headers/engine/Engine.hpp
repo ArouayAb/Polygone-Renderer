@@ -11,12 +11,14 @@
 #include <iostream>
 #include "Window.hpp"
 #include "Instance.hpp"
+#include "Surface.hpp"
 
 namespace dvk {
     class Engine {
     private:
         Window window;
         Instance instance;
+        Surface surface;
         Debug debug;
 
         void init();
