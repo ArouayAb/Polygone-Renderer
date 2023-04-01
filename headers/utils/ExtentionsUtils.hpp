@@ -14,6 +14,7 @@
 #include <GLFW/glfw3.h>
 
 namespace dvk::extensions_utils {
+    extern std::vector<const char*> deviceExtensions;
     std::vector<const char*> getRequiredExtensions();
     void checkExtensionsCompatibility(
             std::vector<const char*>& glfwExtensions,

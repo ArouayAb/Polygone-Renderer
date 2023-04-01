@@ -7,8 +7,8 @@
 
 namespace dvk {
 
-    std::shared_ptr<GLFWwindow> Window::getRawWindow() const {
-        return window;
+    GLFWwindow* Window::getRawWindow() {
+        return this->window.get();
     }
 
     Window::Window() : HEIGHT(600), WIDTH(800) {
@@ -33,7 +33,7 @@ namespace dvk {
     }
 
     Window::~Window() {
-        glfwDestroyWindow(this->window.get());
+        glfwDestroyWindow(getRawWindow());
         glfwTerminate();
     }
 } // dvk

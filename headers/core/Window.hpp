@@ -25,7 +25,7 @@ namespace dvk {
         };
         const uint32_t HEIGHT;
         const uint32_t WIDTH;
-        std::shared_ptr<GLFWwindow> window;
+        std::unique_ptr<GLFWwindow, DestroyGLFWwindow> window;
 
         void createWindow(const std::vector<WindowHint>& windowHints);
     public:
@@ -33,7 +33,7 @@ namespace dvk {
         ~Window();
 
         [[nodiscard]]
-        std::shared_ptr<GLFWwindow> getRawWindow() const;
+        GLFWwindow* getRawWindow();
 
         template<typename Lambda>
         void startLoop(Lambda&& cb) {

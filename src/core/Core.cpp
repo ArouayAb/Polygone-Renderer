@@ -1,4 +1,5 @@
 #include "Core.hpp"
+#include "_QueueFamilyIndices.hpp"
 
 namespace dvk {
 
@@ -221,9 +222,9 @@ namespace dvk {
         }
     }
 
-    QueueFamilyIndices Core::findQueueFamilies(VkPhysicalDevice device)
+    deprecated::QueueFamilyIndices Core::findQueueFamilies(VkPhysicalDevice device)
     {
-        QueueFamilyIndices indices;
+        deprecated::QueueFamilyIndices indices;
 
         uint32_t queueFamilyCount = 0;
         vkGetPhysicalDeviceQueueFamilyProperties(device, &queueFamilyCount, nullptr);
@@ -259,7 +260,7 @@ namespace dvk {
 
     bool Core::isDeviceSuitable(VkPhysicalDevice device)
     {
-        QueueFamilyIndices indices = findQueueFamilies(device);
+        deprecated::QueueFamilyIndices indices = findQueueFamilies(device);
         bool deviceExtensionsSupported = checkDeviceExensionsSupport(device);
 
         bool swapChainAdequate = false;
@@ -303,7 +304,7 @@ namespace dvk {
 
     void Core::createLogicalDevice()
     {
-        QueueFamilyIndices indices = findQueueFamilies(physicalDevice);
+        deprecated::QueueFamilyIndices indices = findQueueFamilies(physicalDevice);
 
         std::vector<VkDeviceQueueCreateInfo> queueCreateInfos;
         std::set<uint32_t> uniqueQueueFamilies = { indices.graphicsFamily.value(), indices.presentationFamily.value() };
@@ -422,7 +423,7 @@ namespace dvk {
         createInfo.imageArrayLayers = 1;
         createInfo.imageUsage = VK_IMAGE_USAGE_COLOR_ATTACHMENT_BIT;
 
-        QueueFamilyIndices indices = findQueueFamilies(physicalDevice);
+        deprecated::QueueFamilyIndices indices = findQueueFamilies(physicalDevice);
         uint32_t queueFamilyIndices[] = {indices.graphicsFamily.value(), indices.presentationFamily.value()};
 
         if (indices.graphicsFamily != indices.presentationFamily)
@@ -561,8 +562,8 @@ namespace dvk {
 
     void Core::createGraphicsPipeline()
     {
-        auto vertShaderCode = readFile(R"(C:\Users\Arouay\source\repos\vk-draft\src\core\shaders\shader.spv)");
-        auto fragShaderCode = readFile(R"(C:\Users\Arouay\source\repos\vk-draft\src\core\shaders\frag.spv)");
+        auto vertShaderCode = readFile(R"(C:\Users\Arouay\source\repos\draft-vk\src\core\shaders\shader.spv)");
+        auto fragShaderCode = readFile(R"(C:\Users\Arouay\source\repos\draft-vk\src\core\shaders\frag.spv)");
 
         VkShaderModule vertShaderModule = createShaderModule(vertShaderCode);
         VkShaderModule fragShaderModule = createShaderModule(fragShaderCode);
@@ -729,7 +730,7 @@ namespace dvk {
 
     void Core::createCommandPool()
     {
-        QueueFamilyIndices queueFamilyIndices = findQueueFamilies(physicalDevice);
+        deprecated::QueueFamilyIndices queueFamilyIndices = findQueueFamilies(physicalDevice);
 
         VkCommandPoolCreateInfo commandPoolInfos{};
         commandPoolInfos.sType = VK_STRUCTURE_TYPE_COMMAND_POOL_CREATE_INFO;

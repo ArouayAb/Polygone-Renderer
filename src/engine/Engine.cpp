@@ -12,7 +12,8 @@ namespace dvk {
 
     Engine::Engine() :
         debug(instance.getInstance()),
-        surface(window.getRawWindow().get(), instance.getInstance())
+        surface(window.getRawWindow(), instance.getInstance()),
+        device(instance.getInstance(), surface.getSurface())
     {
         init();
     }

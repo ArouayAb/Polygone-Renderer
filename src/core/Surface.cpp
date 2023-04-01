@@ -16,4 +16,10 @@ namespace dvk {
     Surface::~Surface() {
         vkDestroySurfaceKHR(*instance, surface, nullptr);
     }
+
+    VkSurfaceKHR *Surface::getSurface() {
+        return &surface;
+    }
+
+
 } // dvk

@@ -12,6 +12,7 @@ const bool enable_Validation_Layers = true;
 #include <GLFW/glfw3.h>
 #include "QueueFamilyIndices.hpp"
 #include "SwapChainSupportDetails.hpp"
+#include "_QueueFamilyIndices.hpp"
 #include <vector>
 #include <set>
 #include <iostream>
@@ -99,7 +100,7 @@ namespace dvk {
 
         void createSurface();
 
-        QueueFamilyIndices findQueueFamilies(VkPhysicalDevice device);
+        deprecated::QueueFamilyIndices findQueueFamilies(VkPhysicalDevice device);
         bool isDeviceSuitable(VkPhysicalDevice device);
 
         void pickPhysicalDevice();

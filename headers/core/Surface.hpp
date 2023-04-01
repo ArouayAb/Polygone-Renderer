@@ -18,6 +18,8 @@ namespace dvk {
     public:
         Surface(GLFWwindow* window, VkInstance* instance);
         ~Surface();
+
+        VkSurfaceKHR* getSurface();
     };
 
 } // dvk

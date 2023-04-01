@@ -12,6 +12,7 @@
 #include "Window.hpp"
 #include "Instance.hpp"
 #include "Surface.hpp"
+#include "Device.hpp"
 
 namespace dvk {
     class Engine {
@@ -20,6 +21,7 @@ namespace dvk {
         Instance instance;
         Surface surface;
         Debug debug;
+        Device device;
 
         void init();
     public:
