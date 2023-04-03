@@ -25,6 +25,7 @@ namespace dvk {
         };
         const uint32_t HEIGHT;
         const uint32_t WIDTH;
+        bool framebufferResized;
         std::unique_ptr<GLFWwindow, DestroyGLFWwindow> window;
 
         void createWindow(const std::vector<WindowHint>& windowHints);
@@ -34,6 +35,10 @@ namespace dvk {
 
         [[nodiscard]]
         GLFWwindow* getRawWindow();
+        [[nodiscard]]
+        bool isFramebufferResized() const;
+        void setFramebufferResized(bool framebufferResized);
+        static void framebufferResizeCallback(GLFWwindow* window, int width, int height);
 
         template<typename Lambda>
         void startLoop(Lambda&& cb) {

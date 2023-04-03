@@ -23,19 +23,20 @@ namespace dvk::Core {
     private:
         int currentFrame = 0;
         const int MAX_FRAMES_IN_FLIGHT = 2;
-        Window window;
-        Instance instance;
-        Surface surface;
-        Debug debug;
-        Device device;
-        Swapchain swapchain;
-        SwapchainImageViews swapchainImageViews;
-        RenderPass renderPass;
-        GraphicsPipeline graphicsPipeline;
-        Framebuffers framebuffers;
-        CommandBuffers commandBuffers;
-        Synchronization synchronization;
+        std::unique_ptr<Window> window;
+        std::unique_ptr<Instance> instance;
+        std::unique_ptr<Surface> surface;
+        std::unique_ptr<Debug> debug;
+        std::unique_ptr<Device> device;
+        std::unique_ptr<Swapchain> swapchain;
+        std::unique_ptr<SwapchainImageViews> swapchainImageViews;
+        std::unique_ptr<RenderPass> renderPass;
+        std::unique_ptr<GraphicsPipeline> graphicsPipeline;
+        std::unique_ptr<Framebuffers> framebuffers;
+        std::unique_ptr<CommandBuffers> commandBuffers;
+        std::unique_ptr<Synchronization> synchronization;
 
+        void recreateSwapchain();
         void init();
     public:
         Core();

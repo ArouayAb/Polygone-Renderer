@@ -37,6 +37,7 @@ namespace dvk {
         ~CommandBuffers();
 
         std::vector<VkCommandBuffer>* getCommandBuffer();
+        void recordCommandBuffer(int currentFrame, uint32_t imageIndex);
     };
 
 } // dvk
