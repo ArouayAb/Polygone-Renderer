@@ -13,6 +13,13 @@
 #include "Instance.hpp"
 #include "Surface.hpp"
 #include "Device.hpp"
+#include "Swapchain.hpp"
+#include "SwapchainImageViews.hpp"
+#include "RenderPass.hpp"
+#include "GraphicsPipeline.hpp"
+#include "Framebuffers.hpp"
+#include "CommandBuffers.hpp"
+#include "Synchronization.hpp"
 
 namespace dvk {
     class Engine {
@@ -22,6 +29,13 @@ namespace dvk {
         Surface surface;
         Debug debug;
         Device device;
+        Swapchain swapchain;
+        SwapchainImageViews swapchainImageViews;
+        RenderPass renderPass;
+        GraphicsPipeline graphicsPipeline;
+        Framebuffers framebuffers;
+        CommandBuffers commandBuffers;
+        Synchronization synchronization;
 
         void init();
     public:

@@ -29,7 +29,7 @@ namespace dvk {
         createInfo.sType = VK_STRUCTURE_TYPE_INSTANCE_CREATE_INFO;
         createInfo.pApplicationInfo = &appInfo;
 
-        std::vector<const char*> glfwExtensions = extensions_utils::getRequiredExtensions();
+        std::vector<const char*> glfwExtensions = utils::getRequiredExtensions();
         createInfo.enabledExtensionCount = static_cast<uint32_t>(glfwExtensions.size());
         createInfo.ppEnabledExtensionNames = glfwExtensions.data();
 
@@ -56,7 +56,7 @@ namespace dvk {
         vkEnumerateInstanceExtensionProperties(nullptr, &extensionCount, extensions.data());
 
         Debug::checkValidationLayerSupport();
-        extensions_utils::checkExtensionsCompatibility(glfwExtensions, extensions);
+        utils::checkExtensionsCompatibility(glfwExtensions, extensions);
 
         if (vkCreateInstance(&createInfo, nullptr, &instance) != VK_SUCCESS)
         {

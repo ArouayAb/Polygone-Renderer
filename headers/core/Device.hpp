@@ -10,7 +10,7 @@
 #include <stdexcept>
 #include "Debug.hpp"
 #include "QueueFamilyIndices.hpp"
-#include "SwapChainSupportDetails.hpp"
+#include "SwapchainSupportDetails.hpp"
 #include "ExtentionsUtils.hpp"
 #include "Constants.hpp"
 
@@ -32,7 +32,9 @@ namespace dvk {
         explicit Device(VkInstance* instance, VkSurfaceKHR* surface);
         ~Device();
 
-
+        VkPhysicalDevice* getPhysicalDevice();
+        VkDevice* getDevice();
+        VkQueue* getGraphicsQueue();
     };
 
 } // dvk

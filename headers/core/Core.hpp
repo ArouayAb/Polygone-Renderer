@@ -11,7 +11,7 @@ const bool enable_Validation_Layers = true;
 
 #include <GLFW/glfw3.h>
 #include "QueueFamilyIndices.hpp"
-#include "SwapChainSupportDetails.hpp"
+#include "SwapchainSupportDetails.hpp"
 #include "_QueueFamilyIndices.hpp"
 #include <vector>
 #include <set>

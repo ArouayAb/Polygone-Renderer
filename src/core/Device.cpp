@@ -20,12 +20,12 @@ namespace dvk {
     bool Device::isDeviceSuitable(VkPhysicalDevice device)
     {
         QueueFamilyIndices indices(&device, surface);
-        bool deviceExtensionsSupported = extensions_utils::checkDeviceExensionsSupport(device);
+        bool deviceExtensionsSupported = utils::checkDeviceExensionsSupport(device);
 
         bool swapChainAdequate = false;
         if (deviceExtensionsSupported)
         {
-            SwapChainSupportDetails	swapChainSupport;
+            SwapchainSupportDetails	swapChainSupport;
             swapChainSupport.querySwapChainSupportDetails(device, *surface);
             swapChainAdequate = !swapChainSupport.formats.empty() && !swapChainSupport.presentModes.empty();
         }
@@ -86,8 +86,8 @@ namespace dvk {
         createInfo.queueCreateInfoCount = static_cast<uint32_t>(queueCreateInfos.size());
         createInfo.pQueueCreateInfos = queueCreateInfos.data();
         createInfo.pEnabledFeatures = &deviceFeatures;
-        createInfo.enabledExtensionCount = static_cast<uint32_t>(extensions_utils::deviceExtensions.size());
-        createInfo.ppEnabledExtensionNames = extensions_utils::deviceExtensions.data();
+        createInfo.enabledExtensionCount = static_cast<uint32_t>(utils::deviceExtensions.size());
+        createInfo.ppEnabledExtensionNames = utils::deviceExtensions.data();
 
         if (constants::enable_Validation_Layers)
         {
@@ -105,5 +105,17 @@ namespace dvk {
 
         vkGetDeviceQueue(device, indices.getGraphicsFamilyValue(), 0, &graphicsQueue);
         vkGetDeviceQueue(device, indices.getPresentationFamilyValue(), 0, &presentationQueue);
+    }
+
+    VkPhysicalDevice *Device::getPhysicalDevice() {
+        return &physicalDevice;
+    }
+
+    VkDevice *Device::getDevice() {
+        return &device;
+    }
+
+    VkQueue *Device::getGraphicsQueue() {
+        return &graphicsQueue;
     }
 } // dvk

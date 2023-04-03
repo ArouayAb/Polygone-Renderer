@@ -1,8 +1,8 @@
-#include "SwapChainSupportDetails.hpp"
+#include "SwapchainSupportDetails.hpp"
 
 namespace dvk {
 
-    void SwapChainSupportDetails::querySwapChainSupportDetails(VkPhysicalDevice device, VkSurfaceKHR surface)
+    void SwapchainSupportDetails::querySwapChainSupportDetails(VkPhysicalDevice device, VkSurfaceKHR surface)
     {
         //SurfaceCapabilities
         vkGetPhysicalDeviceSurfaceCapabilitiesKHR(device, surface, &this->capabilities);

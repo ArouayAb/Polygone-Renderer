@@ -5,7 +5,7 @@
 #include "ExtentionsUtils.hpp"
 #include "Constants.hpp"
 
-namespace dvk::extensions_utils {
+namespace dvk::utils {
     std::vector<const char*> deviceExtensions{ VK_KHR_SWAPCHAIN_EXTENSION_NAME };
     std::vector<const char*> getRequiredExtensions()
     {

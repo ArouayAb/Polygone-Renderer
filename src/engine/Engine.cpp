@@ -13,7 +13,44 @@ namespace dvk {
     Engine::Engine() :
         debug(instance.getInstance()),
         surface(window.getRawWindow(), instance.getInstance()),
-        device(instance.getInstance(), surface.getSurface())
+        device(instance.getInstance(), surface.getSurface()),
+        swapchain(
+                window.getRawWindow(),
+                surface.getSurface(),
+                device.getPhysicalDevice(),
+                device.getDevice()
+                ),
+        swapchainImageViews(
+                device.getDevice(),
+                swapchain.getSwapchainImages(),
+                swapchain.getSwapchainImageFormat()
+                ),
+        renderPass(device.getDevice(), swapchain.getSwapchainImageFormat()),
+        graphicsPipeline(
+                device.getDevice(),
+                renderPass.getRenderPass(),
+                swapchain.getSwapchainExtent()
+                ),
+        framebuffers(
+                device.getDevice(),
+                swapchainImageViews.getSwapchainImageViews(),
+                renderPass.getRenderPass(),
+                swapchain.getSwapchainExtent()
+                ),
+        commandBuffers(
+                device.getPhysicalDevice(),
+                device.getDevice(),
+                surface.getSurface(),
+                framebuffers.getFramebuffers(),
+                renderPass.getRenderPass(),
+                swapchain.getSwapchainExtent(),
+                graphicsPipeline.getGraphicsPipeline()
+                ),
+        synchronization(
+                device.getDevice(),
+                swapchain.getSwapchainImages(),
+                device.getGraphicsQueue()
+                )
     {
         init();
     }

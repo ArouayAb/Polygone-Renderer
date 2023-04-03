@@ -266,7 +266,7 @@ namespace dvk {
         bool swapChainAdequate = false;
         if (deviceExtensionsSupported)
         {
-            SwapChainSupportDetails	swapChainSupport;
+            SwapchainSupportDetails	swapChainSupport;
             swapChainSupport.querySwapChainSupportDetails(device, surface);
             swapChainAdequate = !swapChainSupport.formats.empty() && !swapChainSupport.presentModes.empty();
         }
@@ -396,7 +396,7 @@ namespace dvk {
 
     void Core::createSwapChain()
     {
-        SwapChainSupportDetails swapChainSupport;
+        SwapchainSupportDetails swapChainSupport;
         swapChainSupport.querySwapChainSupportDetails(physicalDevice, surface);
 
         VkSurfaceFormatKHR surfaceFormat = chooseSwapSurfaceFormat(swapChainSupport.formats);
@@ -562,8 +562,8 @@ namespace dvk {
 
     void Core::createGraphicsPipeline()
     {
-        auto vertShaderCode = readFile(R"(C:\Users\Arouay\source\repos\draft-vk\src\core\shaders\shader.spv)");
-        auto fragShaderCode = readFile(R"(C:\Users\Arouay\source\repos\draft-vk\src\core\shaders\frag.spv)");
+        auto vertShaderCode = readFile(R"(C:\Users\Arouay\Documents\Projects\draft-vk\src\core\shaders\shader.spv)");
+        auto fragShaderCode = readFile(R"(C:\Users\Arouay\Documents\Projects\draft-vk\src\core\shaders\frag.spv)");
 
         VkShaderModule vertShaderModule = createShaderModule(vertShaderCode);
         VkShaderModule fragShaderModule = createShaderModule(fragShaderCode);

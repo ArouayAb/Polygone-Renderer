@@ -13,7 +13,7 @@
 #include <set>
 #include <GLFW/glfw3.h>
 
-namespace dvk::extensions_utils {
+namespace dvk::utils {
     extern std::vector<const char*> deviceExtensions;
     std::vector<const char*> getRequiredExtensions();
     void checkExtensionsCompatibility(
