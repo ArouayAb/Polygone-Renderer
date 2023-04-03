@@ -10,55 +10,12 @@ namespace dvk {
 
     }
 
-    Engine::Engine() :
-        debug(instance.getInstance()),
-        surface(window.getRawWindow(), instance.getInstance()),
-        device(instance.getInstance(), surface.getSurface()),
-        swapchain(
-                window.getRawWindow(),
-                surface.getSurface(),
-                device.getPhysicalDevice(),
-                device.getDevice()
-                ),
-        swapchainImageViews(
-                device.getDevice(),
-                swapchain.getSwapchainImages(),
-                swapchain.getSwapchainImageFormat()
-                ),
-        renderPass(device.getDevice(), swapchain.getSwapchainImageFormat()),
-        graphicsPipeline(
-                device.getDevice(),
-                renderPass.getRenderPass(),
-                swapchain.getSwapchainExtent()
-                ),
-        framebuffers(
-                device.getDevice(),
-                swapchainImageViews.getSwapchainImageViews(),
-                renderPass.getRenderPass(),
-                swapchain.getSwapchainExtent()
-                ),
-        commandBuffers(
-                device.getPhysicalDevice(),
-                device.getDevice(),
-                surface.getSurface(),
-                framebuffers.getFramebuffers(),
-                renderPass.getRenderPass(),
-                swapchain.getSwapchainExtent(),
-                graphicsPipeline.getGraphicsPipeline()
-                ),
-        synchronization(
-                device.getDevice(),
-                swapchain.getSwapchainImages(),
-                device.getGraphicsQueue()
-                )
+    Engine::Engine()
     {
         init();
     }
 
     void Engine::run() {
-        this->window.startLoop([](){
-            std::cout << "frame draw" << std::endl;
-//            drawFrame();
-        });
+        core.start();
     }
 }

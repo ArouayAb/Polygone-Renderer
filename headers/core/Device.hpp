@@ -35,6 +35,7 @@ namespace dvk {
         VkPhysicalDevice* getPhysicalDevice();
         VkDevice* getDevice();
         VkQueue* getGraphicsQueue();
+        VkQueue* getPresentationQueue();
     };
 
 } // dvk

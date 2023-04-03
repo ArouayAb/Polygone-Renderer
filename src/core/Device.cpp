@@ -118,4 +118,8 @@ namespace dvk {
     VkQueue *Device::getGraphicsQueue() {
         return &graphicsQueue;
     }
+
+    VkQueue *Device::getPresentationQueue() {
+        return &presentationQueue;
+    }
 } // dvk

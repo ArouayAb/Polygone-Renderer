@@ -35,6 +35,8 @@ namespace dvk {
                 VkPipeline* graphicsPipeline
                 );
         ~CommandBuffers();
+
+        std::vector<VkCommandBuffer>* getCommandBuffer();
     };
 
 } // dvk

@@ -7,10 +7,11 @@
 #include "Synchronization.hpp"
 
 namespace dvk {
-    Synchronization::Synchronization(VkDevice* device, std::vector<VkImage>* swapchainImages, VkQueue* graphicsQueue) :
+    Synchronization::Synchronization(VkDevice* device, std::vector<VkImage>* swapchainImages, VkQueue* graphicsQueue, const int MAX_FRAMES_IN_FLIGHT) :
         device(device),
         swapchainImages(swapchainImages),
-        graphicsQueue(graphicsQueue)
+        graphicsQueue(graphicsQueue),
+        MAX_FRAMES_IN_FLIGHT(MAX_FRAMES_IN_FLIGHT)
     {
         createSyncObjects();
     }
@@ -47,5 +48,21 @@ namespace dvk {
                 throw std::runtime_error("Failed to create syncronization objects for a frame!");
             }
         }
+    }
+
+    std::vector<VkSemaphore>* Synchronization::getImageAvailableSemaphores() {
+        return &imageAvailableSemaphores;
+    }
+
+    std::vector<VkSemaphore>* Synchronization::getRenderFinishedSemaphores() {
+        return &renderFinishedSemaphores;
+    }
+
+    std::vector<VkFence>* Synchronization::getInFlightFences() {
+        return &inFlightFences;
+    }
+
+    std::vector<VkFence>* Synchronization::getImagesInFlight() {
+        return &imagesInFlight;
     }
 } // dvk

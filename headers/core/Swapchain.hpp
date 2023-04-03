@@ -33,6 +33,8 @@ namespace dvk {
         std::vector<VkImage>* getSwapchainImages();
         VkFormat* getSwapchainImageFormat();
         VkExtent2D* getSwapchainExtent();
+
+        VkSwapchainKHR* getSwapChain();
     };
 
 }

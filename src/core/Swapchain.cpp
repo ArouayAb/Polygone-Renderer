@@ -137,4 +137,8 @@ namespace dvk {
     VkExtent2D *Swapchain::getSwapchainExtent() {
         return &swapChainExtent;
     }
+
+    VkSwapchainKHR* Swapchain::getSwapChain() {
+        return &swapChain;
+    }
 }

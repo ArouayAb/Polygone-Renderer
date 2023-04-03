@@ -20,22 +20,12 @@
 #include "Framebuffers.hpp"
 #include "CommandBuffers.hpp"
 #include "Synchronization.hpp"
+#include "Core.hpp"
 
 namespace dvk {
     class Engine {
     private:
-        Window window;
-        Instance instance;
-        Surface surface;
-        Debug debug;
-        Device device;
-        Swapchain swapchain;
-        SwapchainImageViews swapchainImageViews;
-        RenderPass renderPass;
-        GraphicsPipeline graphicsPipeline;
-        Framebuffers framebuffers;
-        CommandBuffers commandBuffers;
-        Synchronization synchronization;
+        Core::Core core;
 
         void init();
     public:

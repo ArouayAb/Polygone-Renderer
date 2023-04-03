@@ -92,4 +92,8 @@ namespace dvk {
             }
         }
     }
+
+    std::vector<VkCommandBuffer> *CommandBuffers::getCommandBuffer() {
+        return &commandBuffers;
+    }
 } // dvk

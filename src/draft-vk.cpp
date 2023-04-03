@@ -1,6 +1,6 @@
 ﻿#include <iostream>
 #include "Engine.hpp"
-#include "Core.hpp"
+#include "_Core.hpp"
 
 int main()
 {
@@ -10,12 +10,4 @@ int main()
     } catch (std::exception& e) {
         std::cerr << e.what() << std::endl;
     }
-
-//    dvk::Core application;
-//    try {
-//    application.run();
-//    } catch (std::exception& e) {
-//        std::cerr << e.what() << std::endl;
-//        return EXIT_FAILURE;
-//    }
 }
