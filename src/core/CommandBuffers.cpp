@@ -69,6 +69,8 @@ namespace dvk {
     }
 
     void CommandBuffers::recordCommandBuffer(int currentFrame, uint32_t imageIndex) {
+        vkResetCommandBuffer(commandBuffers[currentFrame], 0);
+
         VkCommandBufferBeginInfo cmdBufferBeginInfo{};
         cmdBufferBeginInfo.sType = VK_STRUCTURE_TYPE_COMMAND_BUFFER_BEGIN_INFO;
         cmdBufferBeginInfo.flags = VK_COMMAND_BUFFER_USAGE_SIMULTANEOUS_USE_BIT;
@@ -87,9 +89,24 @@ namespace dvk {
         renderPassBeginInfo.pClearValues = &clearColor;
         renderPassBeginInfo.renderArea.offset = {0, 0};
         renderPassBeginInfo.renderArea.extent = *swapChainExtent;
-
         vkCmdBeginRenderPass(commandBuffers[currentFrame], &renderPassBeginInfo, VK_SUBPASS_CONTENTS_INLINE);
+
         vkCmdBindPipeline(commandBuffers[currentFrame], VK_PIPELINE_BIND_POINT_GRAPHICS, *graphicsPipeline);
+
+        VkViewport viewport{};
+        viewport.x = 0.0f;
+        viewport.y = 0.0f;
+        viewport.width = static_cast<float>(swapChainExtent->width);
+        viewport.height = static_cast<float>(swapChainExtent->height);
+        viewport.minDepth = 0.0f;
+        viewport.maxDepth = 1.0f;
+        vkCmdSetViewport(commandBuffers[currentFrame], 0, 1, &viewport);
+
+        VkRect2D scissor{};
+        scissor.offset = {0, 0};
+        scissor.extent = *swapChainExtent;
+        vkCmdSetScissor(commandBuffers[currentFrame], 0, 1, &scissor);
+
         vkCmdDraw(commandBuffers[currentFrame], 3, 1, 0, 0);
 
         vkCmdEndRenderPass(commandBuffers[currentFrame]);

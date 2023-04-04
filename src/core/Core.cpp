@@ -81,13 +81,9 @@ namespace dvk::Core {
             throw std::runtime_error("failed to acquire swap chain image!");
         }
 
-        vkResetCommandBuffer((*(commandBuffers->getCommandBuffer()))[currentFrame], 0);
-        commandBuffers->recordCommandBuffer(currentFrame, imageIndex);
+        vkResetFences(*(device->getDevice()), 1, &(*(synchronization->getInFlightFences()))[currentFrame]);
 
-        if ((*(synchronization->getImagesInFlight()))[imageIndex] != VK_NULL_HANDLE){
-            vkWaitForFences(*(device->getDevice()), 1, &(*(synchronization->getImagesInFlight()))[imageIndex], VK_TRUE, UINT64_MAX);
-        }
-        (*(synchronization->getImagesInFlight()))[imageIndex] = (*(synchronization->getInFlightFences()))[currentFrame];
+        commandBuffers->recordCommandBuffer(currentFrame, imageIndex);
 
         VkSemaphore waitSemaphores[] = {(*(synchronization->getImageAvailableSemaphores()))[currentFrame]};
         VkPipelineStageFlags waitStages[] = {VK_PIPELINE_STAGE_COLOR_ATTACHMENT_OUTPUT_BIT};
@@ -102,8 +98,6 @@ namespace dvk::Core {
         submitInfo.pCommandBuffers = &(*(commandBuffers->getCommandBuffer()))[currentFrame];
         submitInfo.signalSemaphoreCount = 1;
         submitInfo.pSignalSemaphores = signalSemaphore;
-
-        vkResetFences(*(device->getDevice()), 1, &(*(synchronization->getInFlightFences()))[currentFrame]);
 
         if (vkQueueSubmit(*(device->getGraphicsQueue()), 1, &submitInfo, (*(synchronization->getInFlightFences()))[currentFrame]) != VK_SUCCESS){
             throw std::runtime_error("Failed to submit graphics queue!");
@@ -152,6 +146,7 @@ namespace dvk::Core {
 
         vkDeviceWaitIdle(*(device->getDevice()));
 
+        commandBuffers.reset();
         framebuffers.reset();
         swapchainImageViews.reset();
         swapchain.reset();
@@ -172,6 +167,15 @@ namespace dvk::Core {
                 swapchainImageViews->getSwapchainImageViews(),
                 renderPass->getRenderPass(),
                 swapchain->getSwapchainExtent()
+                );
+        commandBuffers = std::make_unique<CommandBuffers>(
+                device->getPhysicalDevice(),
+                device->getDevice(),
+                surface->getSurface(),
+                framebuffers->getFramebuffers(),
+                renderPass->getRenderPass(),
+                swapchain->getSwapchainExtent(),
+                graphicsPipeline->getGraphicsPipeline()
                 );
     }
 

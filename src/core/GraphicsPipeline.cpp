@@ -138,12 +138,13 @@ namespace dvk {
 
         VkDynamicState dynamicStates[] = {
                 VK_DYNAMIC_STATE_VIEWPORT,
+                VK_DYNAMIC_STATE_SCISSOR,
                 VK_DYNAMIC_STATE_BLEND_CONSTANTS
         };
 
         VkPipelineDynamicStateCreateInfo dynamicState{};
         dynamicState.sType = VK_STRUCTURE_TYPE_PIPELINE_DYNAMIC_STATE_CREATE_INFO;
-        dynamicState.dynamicStateCount = 2;
+        dynamicState.dynamicStateCount = 3;
         dynamicState.pDynamicStates = dynamicStates;
 
         VkPipelineLayoutCreateInfo pipelineLayoutInfo{};
@@ -168,7 +169,7 @@ namespace dvk {
         graphicsPipelineInfo.pMultisampleState = &multisamplingState;
         graphicsPipelineInfo.pDepthStencilState = nullptr;
         graphicsPipelineInfo.pColorBlendState = &colorblendState;
-        graphicsPipelineInfo.pDynamicState = nullptr;
+        graphicsPipelineInfo.pDynamicState = &dynamicState;
         graphicsPipelineInfo.layout = pipelineLayout;
         graphicsPipelineInfo.renderPass = *renderPass;
         graphicsPipelineInfo.subpass = 0;
