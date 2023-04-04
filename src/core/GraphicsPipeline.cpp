@@ -6,6 +6,7 @@
 #include <stdexcept>
 #include "GraphicsPipeline.hpp"
 #include "ShadersUtils.hpp"
+#include "Vertex.hpp"
 
 namespace dvk {
     GraphicsPipeline::GraphicsPipeline(VkDevice *device, VkRenderPass *renderPass, VkExtent2D *swapChainExtent) :
@@ -45,6 +46,9 @@ namespace dvk {
         auto vertShaderCode = utils::readFile(R"(C:\Users\Arouay\Documents\Projects\draft-vk\resources\shaders\shader.spv)");
         auto fragShaderCode = utils::readFile(R"(C:\Users\Arouay\Documents\Projects\draft-vk\resources\shaders\frag.spv)");
 
+        auto bindingDescription = Vertex::getBindingDescription();
+        auto attributeDescription = Vertex::getAttributeDescription();
+
         vertShaderModule = createShaderModule(vertShaderCode);
         fragShaderModule = createShaderModule(fragShaderCode);
 
@@ -64,10 +68,10 @@ namespace dvk {
 
         VkPipelineVertexInputStateCreateInfo vertexInputState{};
         vertexInputState.sType = VK_STRUCTURE_TYPE_PIPELINE_VERTEX_INPUT_STATE_CREATE_INFO;
-        vertexInputState.vertexBindingDescriptionCount = 0;
-        vertexInputState.pVertexBindingDescriptions = nullptr;
-        vertexInputState.vertexBindingDescriptionCount = 0;
-        vertexInputState.pVertexAttributeDescriptions = nullptr;
+        vertexInputState.vertexBindingDescriptionCount = 1;
+        vertexInputState.pVertexBindingDescriptions = &bindingDescription;
+        vertexInputState.vertexAttributeDescriptionCount = static_cast<uint32_t>(attributeDescription.size());
+        vertexInputState.pVertexAttributeDescriptions = attributeDescription.data();
 
         VkPipelineInputAssemblyStateCreateInfo inputAssemblyState{};
         inputAssemblyState.sType = VK_STRUCTURE_TYPE_PIPELINE_INPUT_ASSEMBLY_STATE_CREATE_INFO;

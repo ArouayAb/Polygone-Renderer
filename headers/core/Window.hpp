@@ -25,10 +25,13 @@ namespace dvk {
         };
         const uint32_t HEIGHT;
         const uint32_t WIDTH;
+        uint32_t nbFrames{};
+        double lastTime;
         bool framebufferResized;
         std::unique_ptr<GLFWwindow, DestroyGLFWwindow> window;
 
         void createWindow(const std::vector<WindowHint>& windowHints);
+        void showStats();
     public:
         Window();
         ~Window();
@@ -41,9 +44,11 @@ namespace dvk {
         static void framebufferResizeCallback(GLFWwindow* window, int width, int height);
 
         template<typename Lambda>
-        void startLoop(Lambda&& cb) {
+        void startLoop(Lambda&& cb, bool showStats) {
             while (!glfwWindowShouldClose(this->window.get()))
             {
+                if (showStats)
+                    this->showStats();
                 glfwPollEvents();
                 cb();
             }

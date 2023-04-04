@@ -7,6 +7,7 @@
 
 #include <vulkan/vulkan_core.h>
 #include <vector>
+#include "Vertex.hpp"
 
 namespace dvk {
 
@@ -21,6 +22,8 @@ namespace dvk {
         VkRenderPass* renderPass;
         VkExtent2D* swapChainExtent;
         VkPipeline* graphicsPipeline;
+        VkBuffer* vertexBuffer;
+        std::vector<Vertex>* vertices;
 
         void createCommandBuffers();
         void createCommandPool();
@@ -32,7 +35,9 @@ namespace dvk {
                 std::vector<VkFramebuffer>* swapchainFramebuffers,
                 VkRenderPass* renderPass,
                 VkExtent2D* swapChainExtent,
-                VkPipeline* graphicsPipeline
+                VkPipeline* graphicsPipeline,
+                VkBuffer* vertexBuffer,
+                std::vector<Vertex>* vertices
                 );
         ~CommandBuffers();
 

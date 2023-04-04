@@ -5,4 +5,5 @@
 #include "Vertex.hpp"
 
 namespace dvk {
+
 } // dvk

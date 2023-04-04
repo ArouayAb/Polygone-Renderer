@@ -14,7 +14,9 @@ namespace dvk {
                 std::vector<VkFramebuffer>* swapchainFramebuffers,
                 VkRenderPass* renderPass,
                 VkExtent2D* swapChainExtent,
-                VkPipeline* graphicsPipeline
+                VkPipeline* graphicsPipeline,
+                VkBuffer* vertexBuffer,
+                std::vector<Vertex>* vertices
             ) :
             physicalDevice(physicalDevice),
             device(device),
@@ -22,7 +24,9 @@ namespace dvk {
             swapchainFramebuffers(swapchainFramebuffers),
             renderPass(renderPass),
             swapChainExtent(swapChainExtent),
-            graphicsPipeline(graphicsPipeline)
+            graphicsPipeline(graphicsPipeline),
+            vertexBuffer(vertexBuffer),
+            vertices(vertices)
     {
         createCommandPool();
         createCommandBuffers();
@@ -107,7 +111,11 @@ namespace dvk {
         scissor.extent = *swapChainExtent;
         vkCmdSetScissor(commandBuffers[currentFrame], 0, 1, &scissor);
 
-        vkCmdDraw(commandBuffers[currentFrame], 3, 1, 0, 0);
+        VkBuffer vertexBuffers[] = {*vertexBuffer};
+        VkDeviceSize offsets[] = {0};
+        vkCmdBindVertexBuffers(commandBuffers[currentFrame], 0, 1, vertexBuffers, offsets);
+
+        vkCmdDraw(commandBuffers[currentFrame], static_cast<uint32_t>(vertices->size()), 1, 0, 0);
 
         vkCmdEndRenderPass(commandBuffers[currentFrame]);
 

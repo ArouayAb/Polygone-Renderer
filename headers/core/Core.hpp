@@ -16,6 +16,7 @@
 #include "Framebuffers.hpp"
 #include "CommandBuffers.hpp"
 #include "Synchronization.hpp"
+#include "VertexBuffer.hpp"
 
 namespace dvk::Core {
 
@@ -33,6 +34,7 @@ namespace dvk::Core {
         std::unique_ptr<RenderPass> renderPass;
         std::unique_ptr<GraphicsPipeline> graphicsPipeline;
         std::unique_ptr<Framebuffers> framebuffers;
+        std::unique_ptr<VertexBuffer> vertexBuffer;
         std::unique_ptr<CommandBuffers> commandBuffers;
         std::unique_ptr<Synchronization> synchronization;
 

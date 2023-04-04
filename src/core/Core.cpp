@@ -3,8 +3,9 @@
 //
 
 #include "Core.hpp"
-
+#include <chrono>
 #include <memory>
+#include <iomanip>
 
 namespace dvk::Core {
     Core::Core() :
@@ -44,6 +45,7 @@ namespace dvk::Core {
                             swapchain->getSwapchainExtent()
                             )
             ),
+            vertexBuffer(std::make_unique<VertexBuffer>(device->getDevice(), device->getPhysicalDevice())),
             commandBuffers(
                     std::make_unique<CommandBuffers>(
                             device->getPhysicalDevice(),
@@ -52,7 +54,9 @@ namespace dvk::Core {
                             framebuffers->getFramebuffers(),
                             renderPass->getRenderPass(),
                             swapchain->getSwapchainExtent(),
-                            graphicsPipeline->getGraphicsPipeline()
+                            graphicsPipeline->getGraphicsPipeline(),
+                            vertexBuffer->getVertexBuffer(),
+                            vertexBuffer->getVertices()
                             )
             ),
             synchronization(
@@ -69,6 +73,8 @@ namespace dvk::Core {
 
     void Core::drawFrame()
     {
+//        auto start = std::chrono::high_resolution_clock::now();
+
         vkWaitForFences(*(device->getDevice()), 1, &(*(synchronization->getInFlightFences()))[currentFrame], VK_TRUE, UINT64_MAX);
 
         uint32_t imageIndex;
@@ -123,6 +129,10 @@ namespace dvk::Core {
         }
 
         currentFrame = (currentFrame + 1) % MAX_FRAMES_IN_FLIGHT;
+
+//        auto end = std::chrono::high_resolution_clock::now();
+//        auto time_taken = std::chrono::duration_cast<std::chrono::microseconds>(end - start).count();
+//        std::cout << "Frame drawn - time taken: " << time_taken << " " << "microseconds" << std::endl;
     }
 
     void Core::init() {
@@ -133,10 +143,12 @@ namespace dvk::Core {
         this->window->startLoop([this](){
 //            std::cout << "frame draw" << std::endl;
             this->drawFrame();
-        });
+        }, true);
     }
 
     void Core::recreateSwapchain() {
+        auto start = std::chrono::high_resolution_clock::now();
+
         int width = 0, height = 0;
         glfwGetFramebufferSize(window->getRawWindow(), &width, &height);
         while (width == 0 || height == 0) {
@@ -175,8 +187,14 @@ namespace dvk::Core {
                 framebuffers->getFramebuffers(),
                 renderPass->getRenderPass(),
                 swapchain->getSwapchainExtent(),
-                graphicsPipeline->getGraphicsPipeline()
+                graphicsPipeline->getGraphicsPipeline(),
+                vertexBuffer->getVertexBuffer(),
+                vertexBuffer->getVertices()
                 );
+
+        auto end = std::chrono::high_resolution_clock::now();
+        auto time_taken = std::chrono::duration_cast<std::chrono::milliseconds>(end - start).count();
+        std::cout << "Swapchain recreated - time taken: " << time_taken << " " << "milliseconds" << std::endl;
     }
 
 } // dvk

@@ -3,6 +3,7 @@
 //
 
 #include <vector>
+#include <sstream>
 #include "Window.hpp"
 
 namespace dvk {
@@ -11,7 +12,7 @@ namespace dvk {
         return this->window.get();
     }
 
-    Window::Window() : HEIGHT(600), WIDTH(800), framebufferResized(false) {
+    Window::Window() : HEIGHT(1080), WIDTH(1920), framebufferResized(false) {
         glfwInit();
         createWindow(
                 std::vector<WindowHint>{
@@ -50,5 +51,25 @@ namespace dvk {
     void Window::framebufferResizeCallback(GLFWwindow *window, int width, int height) {
         auto windowInstance = reinterpret_cast<Window*>(glfwGetWindowUserPointer(window));
         windowInstance->framebufferResized = true;
+    }
+
+    void Window::showStats() {
+        // Measure speed
+        double currentTime = glfwGetTime();
+        double delta = currentTime - lastTime;
+        nbFrames++;
+        if ( delta >= 1.0 ){ // If last cout was more than 1 sec ago
+//            cout << 1000.0/double(nbFrames) << endl;
+
+            double fps = double(nbFrames) / delta;
+
+            std::stringstream ss;
+            ss  << " [" << (1/fps) * 1000 << " ms" << " - " <<  fps << " FPS]";
+
+            glfwSetWindowTitle(window.get(), ss.str().c_str());
+
+            nbFrames = 0;
+            lastTime = currentTime;
+        }
     }
 } // dvk
