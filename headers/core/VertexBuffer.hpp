@@ -14,6 +14,10 @@ namespace dvk {
     private:
         VkDevice* device;
         VkPhysicalDevice* physicalDevice;
+        VkQueue* graphicsQueue;
+        VkSurfaceKHR* surface;
+        VkBuffer stagingBuffer{};
+        VkDeviceMemory stagingBufferMemory{};
         VkBuffer vertexBuffer{};
         VkDeviceMemory vertexBufferMemory{};
         VkBufferCreateInfo bufferInfo{};
@@ -22,10 +26,18 @@ namespace dvk {
         void createVertexBuffer();
         uint32_t findMemoryType(uint32_t typeFilter, VkMemoryPropertyFlags properties);
         void allocateMemory();
-        void fillMemory();
+        void fillMemory(VkDeviceSize size);
+        void createBuffer(
+                VkDeviceSize bufferSize,
+                VkBufferUsageFlags bufferUsageFlags,
+                VkBuffer& buffer,
+                VkMemoryPropertyFlags memoryProperties,
+                VkDeviceMemory& bufferMemory
+                );
+        void copyBuffer(VkBuffer srcBuffer, VkBuffer dstBuffer, VkDeviceSize size);
     public:
-        VertexBuffer(VkDevice* device, VkPhysicalDevice* physicalDevice);
-        VertexBuffer(VkDevice* device, VkPhysicalDevice* physicalDevice, std::vector<Vertex> vertices);
+        VertexBuffer(VkDevice* device, VkPhysicalDevice* physicalDevice, VkQueue* graphicsQueue, VkSurfaceKHR* surface);
+        VertexBuffer(VkDevice* device, VkPhysicalDevice* physicalDevice, std::vector<Vertex> vertices, VkQueue* graphicsQueue, VkSurfaceKHR* surface);
         ~VertexBuffer();
 
         VkBuffer* getVertexBuffer();

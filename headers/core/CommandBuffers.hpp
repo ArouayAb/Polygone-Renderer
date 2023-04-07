@@ -39,9 +39,10 @@ namespace dvk {
                 VkBuffer* vertexBuffer,
                 std::vector<Vertex>* vertices
                 );
-        ~CommandBuffers();
 
+        ~CommandBuffers();
         std::vector<VkCommandBuffer>* getCommandBuffer();
+
         void recordCommandBuffer(int currentFrame, uint32_t imageIndex);
     };
 

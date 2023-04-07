@@ -45,7 +45,14 @@ namespace dvk::Core {
                             swapchain->getSwapchainExtent()
                             )
             ),
-            vertexBuffer(std::make_unique<VertexBuffer>(device->getDevice(), device->getPhysicalDevice())),
+            vertexBuffer(
+                    std::make_unique<VertexBuffer>(
+                            device->getDevice(),
+                            device->getPhysicalDevice(),
+                            device->getGraphicsQueue(),
+                            surface->getSurface()
+                            )
+            ),
             commandBuffers(
                     std::make_unique<CommandBuffers>(
                             device->getPhysicalDevice(),
